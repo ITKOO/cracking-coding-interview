@@ -18,9 +18,9 @@
 - 문자열 s는 '(' 또는 ')' 로만 이루어져 있습니다.
 
 ```java filename="Problem08.java" showLineNumbers copy
-package test;
+import java.util.Stack;
 
-public class test08 {
+public class Problem08 {
 
 	public static boolean solution(String s) {
         char[] arr = s.toCharArray();
@@ -39,6 +39,64 @@ public class test08 {
         }
 
         return stack.isEmpty();  // 모든 괄호가 올바르게 닫혔는지 확인
+    }
+
+}
+```
+
+## 문제 10 [괄호 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/76502)
+
+대, 중, 소괄호로 이루어진 문자열 s가 주어집니다. 이 s를 왼쪽으로 x(0 ≤ x < s의 길이)칸만큼 회전시켰을 때 s가 올바른 괄호 문자열이 되는 x의 개수를 구하는 solution() 함수를 작성하세요.
+
+### 입출력의 예
+| s | result |
+|---|--------|
+| `"[](){}"` | 3 |
+| `"}]()[{"` | 2 |
+
+### 제약 조건
+- s의 길이는 1 이상 1,000 이하입니다.
+
+```java filename="Problem10.java" showLineNumbers copy
+import java.util.HashMap;
+import java.util.Stack;
+
+public class Problem10 {
+
+	public static int solution(String s) {
+        int answer = 0;
+        char[] arr = (s + s).toCharArray(); // 옆으로 회전시키기 위해 문자열을 2배로 늘림
+        int length = arr.length
+
+        HashMap<Character, Character> map = new HashMap<>();
+        map.put('(', ')');
+        map.put('[', ']');
+        map.put('{', '}');
+
+        Out:
+        for (int i = 0; i < length; i++) {
+            Stack<Character> stack = new Stack<>();
+            for (int j = i; j < i + length; j++) {
+                char c = arr[j];
+                if (map.containsKey(c)) { // 열린 괄호일 경우
+                    stack.push(c);
+                } else { // 닫힌 괄호일 경우
+                    if (stack.isEmpty()) {
+                        // 닫힌 괄호인데 스택이 비어있다면 올바르지 않은 괄호 문자열
+                        continue Out;
+                    }
+                    char open = stack.pop();
+                    if (c != map.get(open)) {
+                        // 스택에서 꺼낸 열린 괄호와 현재 닫힌 괄호가 매칭되지 않음
+                        continue Out;
+                    }
+                }
+            }
+            if (stack.isEmpty()) {
+                answer++;
+            }
+        }
+        return answer;
     }
 
 }
