@@ -122,3 +122,87 @@ class Solution {
     }
 }
 ```
+
+## 문제 06 [실패율](https://school.programmers.co.kr/learn/courses/30/lessons/42889)
+
+```java filename="Problem06.java" showLineNumbers copy
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+class Solution {
+    public int[] solution(int N, int[] stages) {
+        int[] stagePlayers = new int[N + 2];
+
+        for (int i = 0; i < stages.length; i++) {
+            stagePlayers[stages[i]]++;
+        }
+
+        HashMap<Integer, Double> map = new HashMap<>();
+        int length = stages.length;
+
+        for (int i = 1; i <= N; i++) {
+            if (stagePlayers[i] == 0) {
+                map.put(i, 0.);
+            } else {
+                map.put(i, (stagePlayers[i] / (double) length));
+                length = length - stagePlayers[i];
+            }
+        }
+
+
+        return map.entrySet().stream().sorted(
+                (a, b) -> b.getValue().compareTo(a.getValue())
+        ).mapToInt(Map.Entry::getKey).toArray();
+    }
+}
+```
+
+## 문제 07 [방문 길이](https://school.programmers.co.kr/learn/courses/30/lessons/49994)
+
+```java filename="Problem07.java" showLineNumbers copy
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
+
+public class Solution {
+
+    public static int solution(String dirs) {
+        String[] kDirs = dirs.split("");
+        Set<String> set = new LinkedHashSet<>();
+
+        int x = 0;
+        int y = 0;
+
+        for (String dir : kDirs) {
+            int nx = 0;
+            int ny = 0;
+
+            if (Objects.equals(dir, "U")) {
+                ny = y + 1;
+            } else if (Objects.equals(dir, "D")) {
+                ny = y - 1;
+            } else if (Objects.equals(dir, "R")) {
+                nx = x + 1;
+            } else if (Objects.equals(dir, "L")) {
+                nx = x - 1;
+            } else {
+                throw new IllegalArgumentException();
+            }
+
+            if (!isValid(nx, ny)) {
+                continue;
+            }
+
+            set.add(x + " " + y + " " + nx + " " + ny);
+
+            x = nx;
+            y = ny;
+        }
+        for (String s : set) {
+            System.out.println(s);
+        }
+        return set.size();
+    }
+}
+```
