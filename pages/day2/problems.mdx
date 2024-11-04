@@ -6,11 +6,11 @@
 
 ### 입출력의 예
 
-| s | answer |
-|---|--------|
-| "()()" | true |
-| "(())()" | true |
-| ")()(" | false |
+| s        | answer |
+| -------- | ------ |
+| "()()"   | true   |
+| "(())()" | true   |
+| ")()("   | false  |
 
 ### 제약 조건
 
@@ -50,11 +50,11 @@ public class Problem08 {
 
 ### 입출력의 예
 
-| decimal | answer |
-|---|--------|
-| 10 | 1010 |
-| 27 | 11011 |
-| 12345 | 11000000111001 |
+| decimal | answer         |
+| ------- | -------------- |
+| 10      | 1010           |
+| 27      | 11011          |
+| 12345   | 11000000111001 |
 
 ### 제약 조건
 
@@ -91,18 +91,19 @@ public class Problem09 {
 }
 ```
 
-
 ## 문제 10 [괄호 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/76502)
 
 대, 중, 소괄호로 이루어진 문자열 s가 주어집니다. 이 s를 왼쪽으로 x(0 ≤ x < s의 길이)칸만큼 회전시켰을 때 s가 올바른 괄호 문자열이 되는 x의 개수를 구하는 solution() 함수를 작성하세요.
 
 ### 입출력의 예
-| s | result |
-|---|--------|
-| `"[](){}"` | 3 |
-| `"}]()[{"` | 2 |
+
+| s          | result |
+| ---------- | ------ |
+| `"[](){}"` | 3      |
+| `"}]()[{"` | 2      |
 
 ### 제약 조건
+
 - s의 길이는 1 이상 1,000 이하입니다.
 
 ```java filename="Problem10.java" showLineNumbers copy
@@ -147,5 +148,48 @@ public class Problem10 {
         return answer;
     }
 
+}
+```
+
+## 문제 12 [주식 가격](https://school.programmers.co.kr/learn/courses/30/lessons/42584)
+
+초 단위로 기록된 주식가격이 담긴 배열 prices가 매개변수로 주어질 때, 가격이 떨어지지 않은 기간은 몇 초인지를 return 하도록 solution 함수를 완성하세요.
+
+### 입출력 예
+
+| prices          | return          |
+| --------------- | --------------- |
+| [1, 2, 3, 2, 3] | [4, 3, 1, 1, 0] |
+
+### 입출력 예 설명
+
+- 1초 시점의 ₩1은 끝까지 가격이 떨어지지 않았습니다.
+- 2초 시점의 ₩2은 끝까지 가격이 떨어지지 않았습니다.
+- 3초 시점의 ₩3은 1초뒤에 가격이 떨어집니다. 따라서 1초간 가격이 떨어지지 않은 것으로 봅니다.
+- 4초 시점의 ₩2은 1초간 가격이 떨어지지 않았습니다.
+- 5초 시점의 ₩3은 0초간 가격이 떨어지지 않았습니다.
+
+```java filename="Problem12.java" showLineNumbers copy
+import java.util.Arrays;
+import java.util.Stack;
+
+class Solution {
+    public int[] solution(int[] prices) {
+        int[] answer = new int[prices.length];
+        Stack<Integer> stack = new Stack<>(); //stack 생성
+        for(int i = 0; i < prices.length; i++) {
+            while(!stack.isEmpty() && prices[stack.peek()] > prices[i]) { // price가 떨어진 경우
+                int j = stack.pop();
+                answer[j] = i - j; // 가격이 떨어지지 않은 기간 계산
+            }
+            stack.push(i);
+
+        }
+        while(!stack.isEmpty()) { // 마지막까지 price가 떨어지지 않은 경우
+            int j = stack.pop();
+            answer[j] = prices.length - j - 1;
+        }
+        return answer;
+    }
 }
 ```
