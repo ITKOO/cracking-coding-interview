@@ -44,6 +44,54 @@ public class Problem08 {
 }
 ```
 
+## 문제 09 [교재 전용 문제]
+
+10진수를 입력받아 2진수로 변환해 반환하는 solution() 함수를 구현하시오.
+
+### 입출력의 예
+
+| decimal | answer |
+|---|--------|
+| 10 | 1010 |
+| 27 | 11011 |
+| 12345 | 11000000111001 |
+
+### 제약 조건
+
+- decimal은 1이상 10억 미만의 자연수
+
+```java filename="Problem09.java" showLineNumbers copy
+package stack;
+
+import java.util.Stack;
+
+public class Problem09 {
+    public static void main(String[] args){
+        Problem09 problem09 = new Problem09();
+        System.out.println(problem09.solution(27));
+    }
+
+    String solution(int num) {
+        StringBuilder result = new StringBuilder();
+        Stack<Integer> stack = new Stack<>();
+
+        while (num > 0){
+            int remainder = num % 2;
+            stack.push(remainder);
+
+            num = num / 2;
+        }
+
+        while (!stack.isEmpty()){
+            result.append(stack.pop());
+        }
+
+        return result.toString();
+    }
+}
+```
+
+
 ## 문제 10 [괄호 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/76502)
 
 대, 중, 소괄호로 이루어진 문자열 s가 주어집니다. 이 s를 왼쪽으로 x(0 ≤ x < s의 길이)칸만큼 회전시켰을 때 s가 올바른 괄호 문자열이 되는 x의 개수를 구하는 solution() 함수를 작성하세요.
