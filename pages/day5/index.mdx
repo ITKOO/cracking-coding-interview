@@ -58,14 +58,14 @@ import { Callout, Steps } from 'nextra/components'
   class BinaryTree {
       Node root; // 이진 탐색 트리의 루트 노드를 나타내는 변수
 
-      // 삽입 메서드: 트리에 새로운 키를 추가
+      // 트리에 새로운 키를 추가하는 메소드
       void insert(int key) {
           root = insertRec(root, key); // 재귀적으로 삽입을 수행
       }
 
-      // 재귀적으로 노드를 삽입하는 헬퍼 메서드
+      // 재귀적으로 노드를 삽입하는 헬퍼 메소드
       Node insertRec(Node root, int key) {
-          // 기본 조건: 현재 서브트리가 비어 있으면 새로운 노드를 생성하고 반환
+          // 현재 서브트리가 비어 있으면 새로운 노드를 생성하고 반환
           if (root == null) {
               root = new Node(key); // 새 노드를 생성하여 반환
               return root; // 삽입된 노드를 반환
