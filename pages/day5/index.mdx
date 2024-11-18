@@ -1,58 +1,74 @@
 import { Callout, Steps } from 'nextra/components'
 
 <Steps>
-  ### 01 해시
-  데이터를 효율적으로 저장하고, 탐색하는 것은 현대사회에서 매우 중요합니다!<br/>
+  ### 01 트리 개념
+  트리는 데이터를 저장하고 탐색하기에 유용한 구조로, 프로그래밍에서 계층 구조를 표현하는 데 자주 사용됩니다. <br/>
+  트리는 마치 나무를 거꾸로 뒤집어 놓은 형태와 비슷합니다.
 
-  <Callout type="info" e시oji="💡">
-    <b>Q. 어떤 데이터를 찾는다고 했을 때 쉽게 떠올려 볼 수 있는 방법은 무엇일까요?</b><br/>
-    처음부터 끝까지 순차 탐색하는 방법이 있겠죠!<br/>
-    하지만 최약의 경우 탐색할 때마다 모든 데이터를 살펴봐야합니다.
+  <Callout type="info" emoji="🌳">
+    <b>Q. 트리 구조는 어디에 활용될 수 있을까요?</b><br/>
+    트리는 파일 시스템, 데이터베이스, 네트워크 라우팅 등을 구성할 때 유용합니다.
   </Callout>
 
-  순차 탐색을 개선하기 위해, 찾아야 할 값이 어디에 있는지 알아낼 방법이 필요합니다.<br/>
-  이 생각을 바탕으로 만들어진 자료구조가 `해시(Hash)` 입니다.<br/>
+  - **노드**: 트리를 구성하는 기본 요소로, 가장 위에 있는 노드를 **루트 노드**라고 합니다.
+  - **에지**: 노드 간의 연결을 의미하며, 트리의 경로는 루트 노드에서 각 노드까지 유일합니다.
+  - **부모·자식 관계**: 간선으로 연결된 노드 간의 관계를 나타냅니다.
+  - **리프 노드**: 자식이 없는 노드를 의미합니다.
+  - **차수**: 특정 노드가 가지는 자식 노드의 수를 뜻합니다.
 
-  해시는 <b>해시 함수를 사용해서 변환한 값을 인덱스로 삼아 키와 값을 저장해서 빠른 데이터 탐색을 제공하는 자료구조</b>입니다.<br/>
+  ### 02 이진 트리 표현하기
+  이진 트리는 배열 또는 포인터를 사용하여 구현할 수 있습니다.
 
-  ![해시 예시](./hash_ex.png)
+  <Callout type="info" emoji="💡">
+    배열로 이진 트리를 표현할 때, 루트 노드는 인덱스 1번에 저장하며, 왼쪽 자식은 부모 인덱스 × 2, 오른쪽 자식은 부모 인덱스 × 2 + 1입니다.
+  </Callout>
 
- ### 02 해시의 특징
- - `단방향`으로 동작<b>(키를 통해 값을 찾을 수 있지만, 값을 통해 키를 찾을 수는 없음)</b>
- - 찾고자 하는 값을 `O(1)`에서 바로 찾음<b>(키 자체가 해시 함수에 의해 값이 있는 인덱스가 되므로, 값을 찾기 위한 탐색 과정 불필요)</b>
- - 값을 인덱스로 활용하려면 `적절한 변환 과정` 필요
+  - **배열 표현 예시**: 효율적인 메모리 관리가 가능하지만, 공간 낭비가 발생할 수 있습니다.
+  - **포인터 표현**: 각 노드가 왼쪽과 오른쪽 자식을 가리키는 구조로 유연하게 표현할 수 있습니다.
 
-해시는 주로 <b>비밀번호 관리, 데이터베이스 인덱싱, 블록체인(데이터 무결성)</b>과 같은 분야에서 활용됩니다.
+  ### 03 이진 트리 순회
+  이진 트리를 순회하는 방법에는 **전위, 중위, 후위 순회**가 있습니다.
 
+  - **전위 순회 (Preorder)**: 루트 → 왼쪽 자식 → 오른쪽 자식
+  - **중위 순회 (Inorder)**: 왼쪽 자식 → 루트 → 오른쪽 자식
+  - **후위 순회 (Postorder)**: 왼쪽 자식 → 오른쪽 자식 → 루트
 
- ### 03 해시 사용 방법
+  ### 04 이진 탐색 트리
+  이진 탐색 트리는 효율적인 탐색이 가능하도록 데이터를 정렬하여 삽입하는 구조입니다.
+
+  <Callout type="info" emoji="🔍">
+    이진 탐색 트리는 데이터가 균형 있게 분포할 때, 탐색과 삽입 연산이 **O(logN)** 복잡도를 가집니다. 그러나 트리가 한쪽으로 치우치면 **O(N)**이 될 수 있습니다.
+  </Callout>
+
   ```java showLineNumbers copy
-  HashMap<String, Integer> hashMap = new HashMap<>();
+  // 이진 탐색 트리 예제 코드
+  class Node {
+      int data;
+      Node left, right;
 
-  // 1. 해시맵에 데이터 저장
-  hashMap.put("ABC", 10);
-  hashMap.put("BBB", 20);
-  hashMap.put("AAA", 30);
-  hashMap.put("ABC", 15);
+      public Node(int item) {
+          data = item;
+          left = right = null;
+      }
+  }
 
-  // 2. 해시맵안에 데이터가 없다면 true, 있다면 false
-  System.out.println(hashMap.isEmpty());
+  class BinaryTree {
+      Node root;
 
-  // 2. key에 대한 value 값 반환
-  System.out.println(hashMap.get("ABC"));
+      // 삽입 메소드 예시
+      void insert(int key) {
+          root = insertRec(root, key);
+      }
 
-  // 3. 해당 key가 있다면 true, 없다면 false
-  System.out.println(hashMap.containsKey("ABC"));
-
-  // 4. key에 해당하는 데이터 삭제
-  hashMap.remove("ABC");
-
-  // 5. 해시맵 안에 있는 데이터의 개수 반환
-  System.out.println(hashMap.size());
-
-  // 6. 모든 데이터 삭제
-  hashMap.clear();
-  System.out.println(hashMap.isEmpty());
-```
-
-  </Steps>
+      Node insertRec(Node root, int key) {
+          if (root == null) {
+              root = new Node(key);
+              return root;
+          }
+          if (key < root.data)
+              root.left = insertRec(root.left, key);
+          else if (key > root.data)
+              root.right = insertRec(root.right, key);
+          return root;
+      }
+  }
