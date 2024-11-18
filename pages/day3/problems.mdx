@@ -61,6 +61,37 @@ public class test17 {
 }
 
 ```
+## 문제 17 [카드 뭉치](https://school.programmers.co.kr/learn/courses/30/lessons/159994) by 정성욱
+
+```java filename="test17(2).java" showLineNumbers copy
+// 해당 문제를 통해서 알 수 있는 점: 순서를 지켜야되는 경우 큐를 사용한다.
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
+
+class Solution {
+    public String solution(String[] cards1, String[] cards2, String[] goal) {
+        ArrayDeque<String> queue1 = new ArrayDeque<>(Arrays.asList(cards1)); // 카드를 넣고 큐를 생성
+            // Queue<String> queue1 = new ArrayDeque<>(Arrays.asList(cards1));
+        ArrayDeque<String> queue2 = new ArrayDeque<>(Arrays.asList(cards2)); // 카드를 넣고 큐를 생성
+            // Queue<String> queue2 = new ArrayDeque<>(Arrays.asList(cards2));
+
+        for (String word : goal) { // 목표 문장에서 단어 하나씩 꺼내기
+            if (!queue1.isEmpty() && word.equals(queue1.peekFirst())) {
+                queue1.pollFirst(); // 해당 큐의 맨 앞 단어 꺼내기
+            } else if (!queue2.isEmpty() && word.equals(queue2.peekFirst())) {
+                queue2.pollFirst(); // 해당 큐의 맨 앞 단어 꺼내기
+            } else {
+                return "No";
+            }
+        }
+
+        return "Yes";        
+    }
+}
+```
+
+
 
 
 ## 문제 16 [기능 개발](https://school.programmers.co.kr/learn/courses/30/lessons/42586) by 신다연
