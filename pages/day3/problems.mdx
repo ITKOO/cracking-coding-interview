@@ -61,6 +61,36 @@ public class test17 {
 }
 
 ```
+## 문제 17 [카드 뭉치](https://school.programmers.co.kr/learn/courses/30/lessons/159994) by 정성욱
+
+```java filename="test17(2).java" showLineNumbers copy
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
+
+class Solution {
+    public String solution(String[] cards1, String[] cards2, String[] goal) {
+        ArrayDeque<String> queue1 = new ArrayDeque<>(Arrays.asList(cards1));
+            // Queue<String> queue1 = new ArrayDeque<>(Arrays.asList(cards1));
+        ArrayDeque<String> queue2 = new ArrayDeque<>(Arrays.asList(cards2));
+            // Queue<String> queue2 = new ArrayDeque<>(Arrays.asList(cards2));
+
+        for (String word : goal) {
+            if (!queue1.isEmpty() && word.equals(queue1.peekFirst())) {
+                queue1.pollFirst();
+            } else if (!queue2.isEmpty() && word.equals(queue2.peekFirst())) {
+                queue2.pollFirst();
+            } else {
+                return "No";
+            }
+        }
+
+        return "Yes";        
+    }
+}
+```
+
+
 
 
 ## 문제 16 [기능 개발](https://school.programmers.co.kr/learn/courses/30/lessons/42586) by 신다연
