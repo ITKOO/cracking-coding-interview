@@ -41,34 +41,47 @@ import { Callout, Steps } from 'nextra/components'
   </Callout>
 
   ```java showLineNumbers copy
-  // 이진 탐색 트리 예제 코드
+  // 이진 탐색 트리 코드
+  // 각 노드를 정의하는 클래스
   class Node {
-      int data;
-      Node left, right;
+      int data; // 노드에 저장되는 값
+      Node left, right; // 왼쪽 및 오른쪽 자식 노드를 가리키는 변수
 
+      // 생성자: 새 노드를 생성할 때 값을 초기화하고, 자식 노드를 null로 설정
       public Node(int item) {
-          data = item;
-          left = right = null;
+          data = item; // 전달받은 item 값을 data에 저장
+          left = right = null; // 자식 노드는 처음에는 null로 설정
       }
   }
 
+  // 이진 탐색 트리 클래스
   class BinaryTree {
-      Node root;
+      Node root; // 이진 탐색 트리의 루트 노드를 나타내는 변수
 
-      // 삽입 메소드 예시
+      // 삽입 메서드: 트리에 새로운 키를 추가
       void insert(int key) {
-          root = insertRec(root, key);
+          root = insertRec(root, key); // 재귀적으로 삽입을 수행
       }
 
+      // 재귀적으로 노드를 삽입하는 헬퍼 메서드
       Node insertRec(Node root, int key) {
+          // 기본 조건: 현재 서브트리가 비어 있으면 새로운 노드를 생성하고 반환
           if (root == null) {
-              root = new Node(key);
-              return root;
+              root = new Node(key); // 새 노드를 생성하여 반환
+              return root; // 삽입된 노드를 반환
           }
-          if (key < root.data)
-              root.left = insertRec(root.left, key);
-          else if (key > root.data)
-              root.right = insertRec(root.right, key);
+
+          // 삽입할 키가 현재 루트의 값보다 작으면 왼쪽 서브트리에 삽입
+          if (key < root.data) {
+              root.left = insertRec(root.left, key); // 왼쪽 자식에 대해 재귀적으로 호출
+          }
+          // 삽입할 키가 현재 루트의 값보다 크면 오른쪽 서브트리에 삽입
+          else if (key > root.data) {
+              root.right = insertRec(root.right, key); // 오른쪽 자식에 대해 재귀적으로 호출
+          }
+
+          // 현재 루트를 반환 (트리의 구조를 유지)
           return root;
       }
   }
+```
